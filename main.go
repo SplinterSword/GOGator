@@ -39,12 +39,16 @@ func main() {
 	commands.Register("reset", handleReset)
 	commands.Register("users", handleGetUsers)
 	commands.Register("agg", handleAgg)
-	commands.Register("addfeed", handleAddFeeds)
+	commands.Register("addfeed", middlerwareLoggedin(handleAddFeeds))
 	commands.Register("feeds", handleFeeds)
+	commands.Register("follow", middlerwareLoggedin(handleFollow))
+	commands.Register("following", middlerwareLoggedin(handleFollowing))
+	commands.Register("unfollow", middlerwareLoggedin(deleteFeedFollow))
+	commands.Register("browse", middlerwareLoggedin(handleBrowse))
 
 	Args := os.Args
 
-	if len(Args) < 2 && (Args[1] != "reset" && Args[1] != "getUsers" && Args[1] != "feeds") {
+	if len(Args) < 2 && (Args[1] != "reset" && Args[1] != "getUsers" && Args[1] != "feeds" && Args[1] != "following") {
 		log.Fatal("Invalid number of arguments")
 		return
 	}

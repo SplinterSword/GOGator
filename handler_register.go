@@ -26,8 +26,15 @@ func handleRegister(s *State, cmd Command) error {
 		UpdatedAt: time.Now(),
 	}
 
-	_, err := s.db.CreateUser(context.Background(), user)
+	err := s.CurrentConfig.SetUser(username)
 	if err != nil {
+		WriteInTerminal(err.Error())
+		return errors.New("failed to login user")
+	}
+
+	_, err = s.db.CreateUser(context.Background(), user)
+	if err != nil {
+		WriteInTerminal(err.Error())
 		return errors.New("user alread exists")
 	}
 
