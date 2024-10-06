@@ -8,6 +8,7 @@ import (
 	"github.com/SplinterSword/GOGator/internal/config"
 	"github.com/SplinterSword/GOGator/internal/database"
 	_ "github.com/lib/pq"
+	"github.com/pressly/goose"
 )
 
 type State struct {
@@ -27,6 +28,10 @@ func main() {
 		log.Fatal(err.Error())
 	}
 	defer db.Close()
+
+	if err := goose.Up(db, "./sql/schema"); err != nil {
+		log.Fatalf("goose up failed: %v", err)
+	}
 
 	cfg.db = database.New(db)
 	cfg.CurrentConfig = &config
