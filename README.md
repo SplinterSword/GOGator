@@ -106,5 +106,9 @@ To Get All the post from all the feeds(should be left running continously)
 
 To Browse the posts from the aggregated feeds
 ```
-  GOGator browse [Number of posts from each followed post (default is 2)]
+  GOGator browse
+```
+To Reset Your Database
+```
+  GOGator reset
 ```
